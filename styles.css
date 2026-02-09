@@ -59,6 +59,10 @@
     .review-card {
         will-change: transform, opacity;
         transform: translateZ(0);
+        backdrop-filter: none;
+        /* Desactivar blur costoso en móvil */
+        background: rgba(30, 30, 30, 0.9);
+        /* Fondo sólido semi-transparente */
     }
 }
 

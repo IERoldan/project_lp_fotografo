@@ -36,6 +36,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 4. EFECTO VISUAL (Escala y Opacidad)
     const updateVisuals = () => {
+        // En móvil, deshabilitar cálculos costosos de escala
+        if (window.innerWidth < 768) return;
+
         const centerPoint = container.scrollLeft + (container.offsetWidth / 2);
 
         cardsNow.forEach(card => {
