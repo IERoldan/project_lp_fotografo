@@ -1,0 +1,71 @@
+/* CSS Crítico */
+.parallax-bg {
+    background-image: url('https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=640&q=80&fm=webp');
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+@media (min-width: 768px) {
+    .parallax-bg {
+        background-image: url('https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=1024&q=80&fm=webp');
+    }
+}
+
+@media (min-width: 1024px) {
+    .parallax-bg {
+        background-image: url('https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=1920&q=80&fm=webp');
+    }
+}
+
+/* Ocultar barra de scroll en carrusel pero mantener funcionalidad */
+.scrollbar-hide::-webkit-scrollbar {
+    display: none;
+}
+
+.scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.8s ease-out;
+}
+
+.reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+@media (max-width: 768px) {
+    .parallax-bg {
+        background-attachment: scroll;
+    }
+}
+
+/* Pricing Cards Hover Effect */
+.pricing-card {
+    transition: all 0.3s ease;
+}
+
+.pricing-card-highlighted {
+    border: 2px solid #f59e0b !important;
+    transform: translateY(-1rem) !important;
+    box-shadow: 0 20px 25px -5px rgba(245, 158, 11, 0.1), 0 10px 10px -5px rgba(245, 158, 11, 0.04) !important;
+}
+
+/* Booking Selection States */
+.pricing-card-selected {
+    border: 3px solid #f59e0b !important;
+    box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.3) !important;
+}
+
+.time-slot-selected {
+    background: rgba(245, 158, 11, 0.4) !important;
+    border: 2px solid #f59e0b !important;
+    color: white !important;
+    font-weight: bold !important;
+}
