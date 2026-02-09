@@ -57,9 +57,17 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
 
+    let isScrolling = false;
+
     container.addEventListener('scroll', () => {
-        scrollLoop();
-        updateVisuals();
+        if (!isScrolling) {
+            window.requestAnimationFrame(() => {
+                scrollLoop();
+                updateVisuals();
+                isScrolling = false;
+            });
+            isScrolling = true;
+        }
     });
 
     updateVisuals();
@@ -229,6 +237,30 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Reveal on Scroll Animation
 document.addEventListener('DOMContentLoaded', () => {
+    // Parallax Logic for Hero
+    const heroBg = document.getElementById('hero-bg');
+    const heroSection = document.getElementById('inicio');
+
+    if (heroBg && heroSection) {
+        let ticking = false;
+
+        window.addEventListener('scroll', () => {
+            if (!ticking) {
+                window.requestAnimationFrame(() => {
+                    const scrollY = window.scrollY;
+                    const heroHeight = heroSection.offsetHeight;
+
+                    // Solo animar si el hero es visible (o cerca)
+                    if (scrollY <= heroHeight) {
+                        heroBg.style.transform = `translateY(${scrollY * 0.5}px)`;
+                    }
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        });
+    }
+
     const reveals = document.querySelectorAll('.reveal');
     const revealOnScroll = () => {
         const windowHeight = window.innerHeight;
