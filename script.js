@@ -1,3 +1,103 @@
+// Language Switching Logic
+let currentLang = localStorage.getItem('lang') || 'pt'; // Default Portuguese
+
+// Initialize language on page load
+document.addEventListener('DOMContentLoaded', () => {
+    // Set initial language
+    setLanguage(currentLang);
+
+    // Language dropdown toggle
+    const langDropdownBtn = document.getElementById('langDropdownBtn');
+    const langDropdown = document.getElementById('langDropdown');
+
+    if (langDropdownBtn && langDropdown) {
+        langDropdownBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            langDropdown.classList.toggle('hidden');
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', () => {
+            if (!langDropdown.classList.contains('hidden')) {
+                langDropdown.classList.add('hidden');
+            }
+        });
+    }
+
+    // Language option click handlers
+    const langOptions = document.querySelectorAll('.lang-option');
+    langOptions.forEach(option => {
+        option.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const selectedLang = option.getAttribute('data-lang');
+            setLanguage(selectedLang);
+            langDropdown.classList.add('hidden');
+        });
+    });
+});
+
+function setLanguage(lang) {
+    currentLang = lang;
+    localStorage.setItem('lang', lang);
+
+    // Update HTML lang attribute
+    document.documentElement.setAttribute('lang', lang);
+
+    // Update flag icon
+    const currentFlag = document.getElementById('currentFlag');
+    if (currentFlag) {
+        currentFlag.textContent = lang === 'pt' ? '🇧🇷' : '🇪🇸';
+    }
+
+    // Apply translations to all elements with data-i18n
+    if (window.translations && window.translations[lang]) {
+        document.querySelectorAll('[data-i18n]').forEach(element => {
+            const key = element.getAttribute('data-i18n');
+            if (window.translations[lang][key]) {
+                // For input placeholders
+                if (element.tagName === 'INPUT') {
+                    element.placeholder = window.translations[lang][key];
+                } else {
+                    element.textContent = window.translations[lang][key];
+                }
+            }
+        });
+
+        // Update calendar day names (dynamic content)
+        updateCalendarLanguage(lang);
+
+        // Update WhatsApp links
+        updateWhatsAppLinks(lang);
+    }
+}
+
+function updateCalendarLanguage(lang) {
+    // This will be called when calendar renders
+    // The script.js calendar section will use translations[currentLang]
+    window.currentCalendarLang = lang;
+
+    // Re-render calendar if it's already loaded
+    if (typeof updateWeekHeader === 'function') {
+        updateWeekHeader();
+        renderTimeSlots();
+    }
+}
+
+function updateWhatsAppLinks(lang) {
+    const floatingBtn = document.getElementById('whatsappFloating');
+    const bookingBtn = document.getElementById('whatsappBookingBtn');
+
+    if (floatingBtn && CONFIG.WHATSAPP_NUMBER && window.translations[lang]) {
+        const message = window.translations[lang].whatsapp_default;
+        floatingBtn.href = `https://wa.me/${CONFIG.WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+    }
+
+    if (bookingBtn && CONFIG.WHATSAPP_NUMBER && window.translations[lang]) {
+        const message = window.translations[lang].whatsapp_calendar;
+        bookingBtn.href = `https://wa.me/${CONFIG.WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+    }
+}
+
 // Initialize WhatsApp links from CONFIG
 document.addEventListener('DOMContentLoaded', () => {
     // Set floating WhatsApp button
@@ -219,14 +319,16 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     function updateWhatsAppButton() {
-        let message = 'Hola, quiero reservar';
+        const lang = currentLang || 'pt';
+        const trans = window.translations[lang];
+        let message = trans.whatsapp_booking_prefix;
 
         if (selectedPackage) {
-            message += ` el paquete *${selectedPackage.name}* (${selectedPackage.price})`;
+            message += ` ${trans.whatsapp_package} *${selectedPackage.name}* (${selectedPackage.price})`;
         }
 
         if (selectedTimeSlot) {
-            message += ` para el *${selectedTimeSlot.dayName} ${selectedTimeSlot.date}* a las *${selectedTimeSlot.hour}:00*`;
+            message += ` ${trans.whatsapp_for} *${selectedTimeSlot.dayName} ${selectedTimeSlot.date}* ${trans.whatsapp_at} *${selectedTimeSlot.hour}:00*`;
         }
 
         if (!whatsappBtn) return;
@@ -308,8 +410,37 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentWeekStart = getWeekStart(new Date());
     let busySlots = new Set();
 
-    const dayNamesShort = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'];
-    const monthNames = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
+    function getDayNamesShort() {
+        const lang = currentLang || 'pt';
+        return [
+            window.translations[lang].day_sun,
+            window.translations[lang].day_mon,
+            window.translations[lang].day_tue,
+            window.translations[lang].day_wed,
+            window.translations[lang].day_thu,
+            window.translations[lang].day_fri,
+            window.translations[lang].day_sat
+        ];
+    }
+
+    function getMonthNames() {
+        const lang = currentLang || 'pt';
+        return [
+            window.translations[lang].month_jan,
+            window.translations[lang].month_feb,
+            window.translations[lang].month_mar,
+            window.translations[lang].month_apr,
+            window.translations[lang].month_may,
+            window.translations[lang].month_jun,
+            window.translations[lang].month_jul,
+            window.translations[lang].month_aug,
+            window.translations[lang].month_sep,
+            window.translations[lang].month_oct,
+            window.translations[lang].month_nov,
+            window.translations[lang].month_dec
+        ];
+    }
+
     const START_HOUR = 9;
     const END_HOUR = 19;
 
@@ -321,6 +452,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function formatDate(date) {
+        const monthNames = getMonthNames();
         return `${date.getDate()} ${monthNames[date.getMonth()]}`;
     }
 
@@ -330,6 +462,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('weekRange').textContent =
             `${formatDate(currentWeekStart)} - ${formatDate(weekEnd)} ${currentWeekStart.getFullYear()}`;
 
+        const dayNamesShort = getDayNamesShort();
         for (let i = 0; i < 7; i++) {
             const dayDate = new Date(currentWeekStart);
             dayDate.setDate(dayDate.getDate() + i);
@@ -340,6 +473,9 @@ document.addEventListener('DOMContentLoaded', () => {
             `;
         }
     }
+
+    // Expose functions globally for language switching
+    window.updateWeekHeader = updateWeekHeader;
 
     function getWeekEvents() {
         const weekEnd = new Date(currentWeekStart);
@@ -389,6 +525,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const numDaysToShow = isMobile ? 2 : 7;
         const startDayIndex = isMobile ? currentMobileDayOffset : 0;
 
+        const lang = currentLang || 'pt';
+        const dayNamesShort = getDayNamesShort();
+        const busyText = window.translations[lang].calendar_slot_busy;
+        const freeText = window.translations[lang].calendar_slot_free;
+
         for (let hour = START_HOUR; hour < END_HOUR; hour++) {
             const row = document.createElement('div');
             row.className = isMobile ? 'grid grid-cols-3 gap-1' : 'grid grid-cols-8 gap-1';
@@ -419,13 +560,13 @@ document.addEventListener('DOMContentLoaded', () => {
                     }`;
 
                 if (isBusy) {
-                    slot.textContent = 'Ocupado';
+                    slot.textContent = busyText;
                     // Occupied slots show alert but are not selectable for booking
                     slot.addEventListener('click', () => {
                         alert(`🔴 Turno Agendado\n${dayNamesShort[day]} ${slotDate.getDate()} - ${hour}:00`);
                     });
                 } else if (!isPast) {
-                    slot.textContent = 'Libre';
+                    slot.textContent = freeText;
                     // Free slots are selectable for booking
                     slot.addEventListener('click', () => {
                         if (window.bookingSelection) {
@@ -450,6 +591,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    // Expose for language switching
+    window.renderTimeSlots = renderTimeSlots;
+
     function updateMobileDayIndicator() {
         const indicator = document.getElementById('mobileDayIndicator');
         if (!indicator) return;
@@ -463,6 +607,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const endDate = new Date(currentWeekStart);
         endDate.setDate(endDate.getDate() + endDay);
 
+        const dayNamesShort = getDayNamesShort();
         indicator.textContent = `${dayNamesShort[startDay]} ${startDate.getDate()} - ${dayNamesShort[endDay]} ${endDate.getDate()}`;
     }
 
@@ -497,7 +642,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const hours = now.getHours().toString().padStart(2, '0');
         const minutes = now.getMinutes().toString().padStart(2, '0');
         const seconds = now.getSeconds().toString().padStart(2, '0');
-        document.getElementById('lastUpdate').textContent = `Última actualización: ${hours}:${minutes}:${seconds}`;
+        const lang = currentLang || 'pt';
+        const lastUpdateText = window.translations[lang].calendar_last_update;
+        document.getElementById('lastUpdate').textContent = `${lastUpdateText} ${hours}:${minutes}:${seconds}`;
     }
 
     function loadCalendar(showLoading = true) {
