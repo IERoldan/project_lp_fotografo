@@ -1,0 +1,5 @@
+{
+  "buildCommand": "echo \"const CONFIG = { GOOGLE_API_KEY: '$GOOGLE_API_KEY', CALENDAR_ID: '$CALENDAR_ID', WHATSAPP_NUMBER: '$WHATSAPP_NUMBER' };\" > config.js",
+  "outputDirectory": ".",
+  "framework": null
+}
