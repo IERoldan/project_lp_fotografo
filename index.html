@@ -18,6 +18,7 @@
 
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="styles.css">
+    <script src="config.js"></script>
 </head>
 <body class="bg-neutral-950 text-gray-100 font-sans antialiased">
 
@@ -37,7 +38,7 @@
         </div>
     </nav>
 
-    <a href="https://wa.me/+5581983342069?text=Hola,%20quisiera%20reservar%20un%20paseo%20fotográfico." target="_blank" class="fixed bottom-6 left-6 z-50 group">
+    <a id="whatsappFloating" href="#" target="_blank" class="fixed bottom-6 left-6 z-50 group">
         <div class="absolute inset-0 bg-green-400 rounded-full blur opacity-40 group-hover:opacity-100 transition-opacity animate-pulse"></div>
         <div class="relative bg-green-500 hover:bg-green-600 p-4 rounded-full shadow-2xl transition-transform hover:scale-110 flex items-center justify-center">
             <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.008-.57-.008-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
@@ -261,7 +262,7 @@
                     </div>
 
                     <div class="mt-8">
-                        <a id="whatsappBookingBtn" href="https://wa.me/+5581983342069?text=Hola,%20vi%20disponibilidad%20en%20el%20calendario%20y%20quiero%20reservar." target="_blank" class="block w-full bg-green-600 hover:bg-green-500 text-white font-bold py-4 rounded-xl text-center transition-all shadow-lg flex items-center justify-center gap-2">
+                        <a id="whatsappBookingBtn" href="#" target="_blank" class="block w-full bg-green-600 hover:bg-green-500 text-white font-bold py-4 rounded-xl text-center transition-all shadow-lg flex items-center justify-center gap-2">
                             <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.008-.57-.008-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
                             Solicitar Reserva
                         </a>
@@ -351,203 +352,7 @@
                         </div>
                     </div>
 
-                    <script>
-                        // Weekly Time-Slot Calendar
-                        const API_KEY = 'AIzaSyDJ4MXz5obznlaPxK7DRxIUhztlQNY35uI';
-                        const CALENDAR_ID = 'ivanroldan1989@gmail.com';
-                        
-                        let currentWeekStart = getWeekStart(new Date());
-                        let busySlots = new Set();
-                        
-                        const dayNamesShort = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'];
-                        const monthNames = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
-                        const START_HOUR = 9;
-                        const END_HOUR = 19;
-
-                        function getWeekStart(date) {
-                            const d = new Date(date);
-                            const day = d.getDay();
-                            const diff = d.getDate() - day;
-                            return new Date(d.setDate(diff));
-                        }
-
-                        function formatDate(date) {
-                            return `${date.getDate()} ${monthNames[date.getMonth()]}`;
-                        }
-
-                        function updateWeekHeader() {
-                            const weekEnd = new Date(currentWeekStart);
-                            weekEnd.setDate(weekEnd.getDate() + 6);
-                            document.getElementById('weekRange').textContent = 
-                                `${formatDate(currentWeekStart)} - ${formatDate(weekEnd)} ${currentWeekStart.getFullYear()}`;
-                            
-                            // Update day headers
-                            for (let i = 0; i < 7; i++) {
-                                const dayDate = new Date(currentWeekStart);
-                                dayDate.setDate(dayDate.getDate() + i);
-                                const isToday = dayDate.toDateString() === new Date().toDateString();
-                                document.getElementById(`day${i}`).innerHTML = `
-                                    <div class="${isToday ? 'text-amber-400 font-bold' : ''}">${dayNamesShort[i]}</div>
-                                    <div class="text-xs ${isToday ? 'text-amber-400' : 'text-gray-400'}">${dayDate.getDate()}</div>
-                                `;
-                            }
-                        }
-
-                        function getWeekEvents() {
-                            const weekEnd = new Date(currentWeekStart);
-                            weekEnd.setDate(weekEnd.getDate() + 7);
-                            
-                            const timeMin = currentWeekStart.toISOString();
-                            const timeMax = weekEnd.toISOString();
-                            
-                            const url = `https://www.googleapis.com/calendar/v3/calendars/${encodeURIComponent(CALENDAR_ID)}/events?key=${API_KEY}&timeMin=${timeMin}&timeMax=${timeMax}&singleEvents=true`;
-                            
-                            return fetch(url)
-                                .then(response => {
-                                    if (!response.ok) {
-                                        throw new Error('Error al cargar el calendario. Verifica que esté público.');
-                                    }
-                                    return response.json();
-                                })
-                                .then(data => {
-                                    busySlots.clear();
-                                    if (data.items) {
-                                        data.items.forEach(event => {
-                                            const start = new Date(event.start.dateTime || event.start.date);
-                                            const end = new Date(event.end.dateTime || event.end.date);
-                                            
-                                            // Mark all hours occupied by this event
-                                            let current = new Date(start);
-                                            while (current < end) {
-                                                const slotKey = `${current.getFullYear()}-${current.getMonth()}-${current.getDate()}-${current.getHours()}`;
-                                                busySlots.add(slotKey);
-                                                current.setHours(current.getHours() + 1);
-                                            }
-                                        });
-                                    }
-                                })
-                                .catch(error => {
-                                    document.getElementById('calendarError').classList.remove('hidden');
-                                    document.getElementById('calendarError').querySelector('p').textContent = error.message;
-                                });
-                        }
-
-                        function renderTimeSlots() {
-                            const grid = document.getElementById('timeSlotGrid');
-                            grid.innerHTML = '';
-                            
-                            // Create a row for each hour
-                            for (let hour = START_HOUR; hour < END_HOUR; hour++) {
-                                const row = document.createElement('div');
-                                row.className = 'grid grid-cols-8 gap-1';
-                                
-                                // Time label
-                                const timeLabel = document.createElement('div');
-                                timeLabel.className = 'text-xs text-gray-500 py-3 pr-2 text-right';
-                                timeLabel.textContent = `${hour.toString().padStart(2, '0')}:00`;
-                                row.appendChild(timeLabel);
-                                
-                                // Slots for each day
-                                for (let day = 0; day < 7; day++) {
-                                    const slotDate = new Date(currentWeekStart);
-                                    slotDate.setDate(slotDate.getDate() + day);
-                                    slotDate.setHours(hour, 0, 0, 0);
-                                    
-                                    const slotKey = `${slotDate.getFullYear()}-${slotDate.getMonth()}-${slotDate.getDate()}-${hour}`;
-                                    const isBusy = busySlots.has(slotKey);
-                                    const isPast = slotDate < new Date();
-                                    
-                                    const slot = document.createElement('div');
-                                    slot.className = `py-3 px-2 rounded text-center text-xs transition-all cursor-pointer ${
-                                        isPast 
-                                            ? 'bg-neutral-900/50 text-gray-600 cursor-not-allowed' 
-                                            : isBusy 
-                                                ? 'bg-red-500/20 border border-red-500/50 text-red-400 font-semibold'
-                                                : 'bg-neutral-700/30 text-gray-400 hover:bg-neutral-600/50 hover:text-white'
-                                    }`;
-                                    
-                                    if (isBusy) {
-                                        slot.textContent = 'Ocupado';
-                                        slot.addEventListener('click', () => {
-                                            alert(`🔴 Turno Agendado\n${dayNamesShort[day]} ${slotDate.getDate()} - ${hour}:00`);
-                                        });
-                                    } else if (!isPast) {
-                                        slot.textContent = 'Libre';
-                                    }
-                                    
-                                    row.appendChild(slot);
-                                }
-                                
-                                grid.appendChild(row);
-                            }
-                        }
-
-                        function changeWeek(delta) {
-                            currentWeekStart.setDate(currentWeekStart.getDate() + (delta * 7));
-                            updateWeekHeader();
-                            loadCalendar();
-                        }
-
-                        function updateLastUpdateTime() {
-                            const now = new Date();
-                            const hours = now.getHours().toString().padStart(2, '0');
-                            const minutes = now.getMinutes().toString().padStart(2, '0');
-                            const seconds = now.getSeconds().toString().padStart(2, '0');
-                            document.getElementById('lastUpdate').textContent = `Última actualización: ${hours}:${minutes}:${seconds}`;
-                        }
-
-                        function loadCalendar(showLoading = true) {
-                            if (showLoading) {
-                                document.getElementById('calendarLoading').classList.remove('hidden');
-                            }
-                            document.getElementById('calendarError').classList.add('hidden');
-                            
-                            getWeekEvents()
-                                .then(() => {
-                                    renderTimeSlots();
-                                    updateLastUpdateTime();
-                                })
-                                .finally(() => {
-                                    if (showLoading) {
-                                        document.getElementById('calendarLoading').classList.add('hidden');
-                                    }
-                                    // Stop refresh icon animation
-                                    document.getElementById('refreshIcon').classList.remove('animate-spin');
-                                });
-                        }
-
-                        // Auto-refresh configuration
-                        const AUTO_REFRESH_INTERVAL = 60000; // 60 seconds
-                        let refreshInterval;
-
-                        function startAutoRefresh() {
-                            // Clear any existing interval
-                            if (refreshInterval) {
-                                clearInterval(refreshInterval);
-                            }
-                            
-                            // Set up new interval
-                            refreshInterval = setInterval(() => {
-                                loadCalendar(false); // Silent refresh (no loading spinner)
-                            }, AUTO_REFRESH_INTERVAL);
-                        }
-
-                        // Manual refresh handler
-                        document.getElementById('manualRefresh').addEventListener('click', () => {
-                            document.getElementById('refreshIcon').classList.add('animate-spin');
-                            loadCalendar(true);
-                            // Reset auto-refresh timer
-                            startAutoRefresh();
-                        });
-
-                        // Initialize
-                        document.getElementById('prevWeek').addEventListener('click', () => changeWeek(-1));
-                        document.getElementById('nextWeek').addEventListener('click', () => changeWeek(1));
-                        
-                        updateWeekHeader();
-                        loadCalendar();
-                        startAutoRefresh();
-                    </script>
+                    </div>
             </div>
         </div>
     </section>
@@ -557,6 +362,7 @@
         <p class="mt-2 text-xs">Desarrollado con pasión.</p>
     </footer>
 
+    <script src="config.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

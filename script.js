@@ -1,3 +1,18 @@
+// Initialize WhatsApp links from CONFIG
+document.addEventListener('DOMContentLoaded', () => {
+    // Set floating WhatsApp button
+    const floatingBtn = document.getElementById('whatsappFloating');
+    if (floatingBtn && CONFIG.WHATSAPP_NUMBER) {
+        floatingBtn.href = `https://wa.me/${CONFIG.WHATSAPP_NUMBER}?text=Hola,%20quisiera%20reservar%20un%20paseo%20fotográfico.`;
+    }
+
+    // Set booking WhatsApp button initial state
+    const bookingBtn = document.getElementById('whatsappBookingBtn');
+    if (bookingBtn && CONFIG.WHATSAPP_NUMBER) {
+        bookingBtn.href = `https://wa.me/${CONFIG.WHATSAPP_NUMBER}?text=Hola,%20vi%20disponibilidad%20en%20el%20calendario%20y%20quiero%20reservar.`;
+    }
+});
+
 // Carousel Logic (Infinite Reviews)
 document.addEventListener('DOMContentLoaded', () => {
     const container = document.getElementById('carousel-container');
@@ -215,7 +230,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         if (!whatsappBtn) return;
-        whatsappBtn.href = `https://wa.me/+5581983342069?text=${encodeURIComponent(message)}`;
+        whatsappBtn.href = `https://wa.me/${CONFIG.WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
     }
 
     // Expose functions for time slot selection
@@ -234,6 +249,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Update WhatsApp button
             updateWhatsAppButton();
+
+            // Scroll to WhatsApp button with smooth animation
+            const whatsappBtn = document.getElementById('whatsappBookingBtn');
+            if (whatsappBtn) {
+                whatsappBtn.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+                // Add attention-grabbing pulse animation
+                whatsappBtn.style.animation = 'pulse 1s ease-in-out 2';
+            }
         }
     };
 });
@@ -278,8 +302,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Weekly Time-Slot Calendar
 document.addEventListener('DOMContentLoaded', () => {
-    const API_KEY = 'AIzaSyDJ4MXz5obznlaPxK7DRxIUhztlQNY35uI';
-    const CALENDAR_ID = 'ivanroldan1989@gmail.com';
+    const API_KEY = CONFIG.GOOGLE_API_KEY;
+    const CALENDAR_ID = CONFIG.CALENDAR_ID;
 
     let currentWeekStart = getWeekStart(new Date());
     let busySlots = new Set();
